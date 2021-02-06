@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linle.dao.EmployeeDao">
+
+    <update id="addEmployee" parameterType="employee">
+        insert into tb_employee values(null,#{emp_name},#{dept_id},#{job_name},#{join_date},#{telephone})
+    </update>
+
+    <select id="findAllEmployee" resultType="employee">
+        select * from tb_employee;
+    </select>
+
+    <select id="findById" resultType="employee">
+        select * from tb_employee where emp_id = #{id};
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        delete from tb_employee where emp_id = #{id}
+    </delete>
+
+
+    <delete id="deleteBatch" parameterType="int">
+        delete from tb_employee
+        <where>
+            <foreach collection="array" open="emp_id in (" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <update id="updateEmployee" parameterType="Employee">
+        update  tb_employee set emp_name = #{emp_name}, dept_id = #{dept_id},
+        job_name = #{job_name}, join_date = #{join_date}, telephone = #{telephone} where emp_id = #{emp_id}
+    </update>
+
+</mapper>
